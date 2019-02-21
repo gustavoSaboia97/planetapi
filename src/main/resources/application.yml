@@ -1,0 +1,3 @@
+swapi:
+  url:
+    planet: https://swapi.co/api/planets/
