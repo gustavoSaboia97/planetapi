@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import com.planetapi.model.Planet;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
 import static org.springframework.http.ResponseEntity.status;
@@ -32,6 +33,7 @@ import static com.planetapi.components.UrlBuilder.*;
 @RequestMapping(PLANET_API_PATH)
 public class PlanetController {
 
+    @Autowired
     private PlanetBusiness planetBusiness;
 
     @PostMapping
