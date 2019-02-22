@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface PlanetBusiness {
 
-    public Planet addPlanet(Planet planet);
-    public List<Planet> getPlanets();
-    public Planet getPlanetById(String id);
-    public Planet getPlanetByName(String name);
-    public void deletePlanetById(String id);
+    Planet addPlanet(Planet planet);
+    List<Planet> getPlanets();
+    Planet getPlanetById(String id);
+    Planet getPlanetByName(String name);
+    void deletePlanetById(String id);
 }
