@@ -23,15 +23,18 @@ public class PlanetTest {
         String name = "planet_id";
         String climate = "planet_climate";
         String terrain = "planet_terrain";
+        int apparitionCounter = 2;
 
         planet.setId(id);
         planet.setName(name);
         planet.setClimate(climate);
         planet.setTerrain(terrain);
+        planet.setApparitionCounter(apparitionCounter);
 
         assertThat(planet.getId(), is(id));
         assertThat(planet.getName(), is(name));
         assertThat(planet.getClimate(), is(climate));
         assertThat(planet.getTerrain(), is(terrain));
+        assertThat(planet.getApparitionCounter(), is(apparitionCounter));
     }
 }
