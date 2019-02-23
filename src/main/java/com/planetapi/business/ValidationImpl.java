@@ -17,8 +17,12 @@ public class ValidationImpl implements Validation{
     @Override
     public void validateFields(Planet planet) {
 
-        if ( planet == null )
+        if ( planet == null ) {
+
+            log.error("Null Planet");
+
             throw new CannotBeBlankException("planet");
+        }
 
         validateField("name", planet.getName());
         validateField("terrain", planet.getTerrain());
@@ -28,7 +32,11 @@ public class ValidationImpl implements Validation{
     @Override
     public void validateField(String fieldName, String fieldValue) {
 
-        if (StringUtils.isEmpty(fieldValue))
+        if (StringUtils.isEmpty(fieldValue)){
+
+            log.error("Null {} Field", fieldName);
+
             throw new CannotBeBlankException(fieldName);
+        }
     }
 }
