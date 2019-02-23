@@ -16,11 +16,15 @@ public class PlanetBusinessImpl implements PlanetBusiness {
 
     @Autowired
     private PlanetRepository planetRepository;
+    @Autowired
+    private Validation validation;
 
     @Override
     public Planet addPlanet(Planet planet){
 
         log.info("Inserting planet {} in mongodb", planet);
+
+        validation.validateFields(planet);
 
         Optional<Planet> optionalPlanet = planetRepository.findByName(planet.getName());
 

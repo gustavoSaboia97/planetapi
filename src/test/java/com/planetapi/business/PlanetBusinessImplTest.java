@@ -1,5 +1,7 @@
 package com.planetapi.business;
 
+import com.planetapi.exception.CannotBeBlankException;
+import com.planetapi.exception.PlanetAlreadyExistsException;
 import com.planetapi.model.Planet;
 import com.planetapi.repository.PlanetRepository;
 import org.junit.Before;
@@ -7,15 +9,19 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({Optional.class})
 public class PlanetBusinessImplTest {
 
     @InjectMocks
@@ -23,6 +29,8 @@ public class PlanetBusinessImplTest {
 
     @Mock
     private PlanetRepository planetRepository;
+    @Mock
+    private Validation validation;
 
     private Planet planetMock;
 
@@ -33,17 +41,42 @@ public class PlanetBusinessImplTest {
     }
 
     @Test
-    public void shouldCreateNewPlanet(){
+    public void shouldAddNewPlanet(){
 
-        Planet newPlanetMock = mock(Planet.class);
+        String name = "name";
 
-        when(planetRepository.insert(planetMock)).thenReturn(newPlanetMock);
+        Optional<Planet> optionalPlanet = PowerMockito.mock(Optional.class);
+        Planet insertedPlanet = mock(Planet.class);
+
+        when(planetMock.getName()).thenReturn(name);
+        when(planetRepository.findByName(name)).thenReturn(optionalPlanet);
+        when(optionalPlanet.isPresent()).thenReturn(false);
+        PowerMockito.when(planetRepository.insert(planetMock)).thenReturn(insertedPlanet);
 
         Planet newPlanet = planetBusinessImpl.addPlanet(planetMock);
 
+        verify(validation).validateFields(planetMock);
+        verify(planetRepository).findByName(name);
         verify(planetRepository).insert(planetMock);
 
-        assertThat(newPlanet, is(newPlanetMock));
+        assertThat(newPlanet, is(insertedPlanet));
+    }
+
+    @Test(expected = PlanetAlreadyExistsException.class)
+    public void shouldRaizeThatPlanetExists(){
+
+        String name = "name";
+
+        Optional<Planet> optionalPlanet = Optional.of(planetMock);
+
+        when(planetMock.getName()).thenReturn(name);
+        when(planetRepository.findByName(name)).thenReturn(optionalPlanet);
+
+        planetBusinessImpl.addPlanet(planetMock);
+
+        verify(validation).validateFields(planetMock);
+        verify(planetRepository).findByName(name);
+        verify(planetRepository, times(0)).insert(planetMock);
     }
 
     @Test
@@ -58,6 +91,38 @@ public class PlanetBusinessImplTest {
         verify(planetRepository).findAll();
 
         assertThat(planets, is(planetsMock));
+    }
+
+    @Test
+    public void shouldGetPlanetById(){
+
+        String id = "id";
+
+        Optional<Planet> optionalPlanet = Optional.of(planetMock);
+
+        when(planetRepository.findById(id)).thenReturn(optionalPlanet);
+
+        Planet receivedPlanet = planetBusinessImpl.getPlanetById(id);
+
+        verify(planetRepository).findById(id);
+
+        assertThat(receivedPlanet, is(planetMock));
+    }
+
+    @Test
+    public void shouldGetPlanetByName(){
+
+        String name = "name";
+
+        Optional<Planet> optionalPlanet = Optional.of(planetMock);
+
+        when(planetRepository.findByName(name)).thenReturn(optionalPlanet);
+
+        Planet receivedPlanet = planetBusinessImpl.getPlanetByName(name);
+
+        verify(planetRepository).findByName(name);
+
+        assertThat(receivedPlanet, is(planetMock));
     }
 
     @Test
