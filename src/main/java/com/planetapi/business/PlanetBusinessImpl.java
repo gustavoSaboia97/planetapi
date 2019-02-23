@@ -1,5 +1,6 @@
 package com.planetapi.business;
 
+import com.planetapi.exception.PlanetAlreadyExistsException;
 import com.planetapi.model.Planet;
 import com.planetapi.repository.PlanetRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +21,11 @@ public class PlanetBusinessImpl implements PlanetBusiness {
     public Planet addPlanet(Planet planet){
 
         log.info("Inserting planet {} in mongodb", planet);
+
+        Optional<Planet> optionalPlanet = planetRepository.findByName(planet.getName());
+
+        if (optionalPlanet.isPresent())
+            throw new PlanetAlreadyExistsException();
 
         Planet insertedPlanet = planetRepository.insert(planet);
 
