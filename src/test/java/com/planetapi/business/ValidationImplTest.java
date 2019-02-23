@@ -2,8 +2,11 @@ package com.planetapi.business;
 
 import com.planetapi.exception.CannotBeBlankException;
 import com.planetapi.model.Planet;
+
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.mockito.Mockito.*;
 
 public class ValidationImplTest {
 
@@ -12,7 +15,7 @@ public class ValidationImplTest {
     @Before
     public void setUp(){
 
-        validation = new ValidationImpl();
+        validation = spy(new ValidationImpl());
     }
 
     @Test(expected = CannotBeBlankException.class)
@@ -103,5 +106,21 @@ public class ValidationImplTest {
     public void shouldNotPassIntoValidationFieldWithBlankField(){
 
         validation.validateField("field", "");
+    }
+
+    @Test
+    public void shouldPassIntoValidation(){
+
+        Planet planet = new Planet();
+
+        planet.setName("name");
+        planet.setTerrain("terrain");
+        planet.setClimate("climate");
+
+        validation.validateFields(planet);
+
+        verify(validation).validateField("name", planet.getName());
+        verify(validation).validateField("terrain", planet.getTerrain());
+        verify(validation).validateField("climate", planet.getClimate());
     }
 }
