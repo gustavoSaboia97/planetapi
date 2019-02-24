@@ -4,7 +4,9 @@ Este repositório consiste em desenvolver um CRUD com planetas, consumir uma api
 ## Tecnologias Utilizadas
 * Java 8
 * Spring Boot
+* Junit
 * MongoDB
+* Docker
 
 ## Conexão do MongoDb
 
@@ -55,3 +57,10 @@ POST: `localhost:8080/api/planet/` Insere um novo planeta na base de dados. Para
 DELETE: `localhost:8080/api/planet/{ID}` Deleta um planeta na base de dados com o id indicado.
     
     Sem conteúdo de resposta
+    
+    
+## Executar projeto com docker
+
+Para executar o projeto com o docker primeiro se faz necessário construir o jar do projeto: `mvn clean package`
+
+Em seguida para executar o projeto com docker compose: `docker-compose up` ou `docker-compose up -d` para rodar em background.
