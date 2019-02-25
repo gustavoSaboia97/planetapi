@@ -18,6 +18,13 @@ MONGO_PORT=27017
 MONGO_DATABASE=planetsdb
 ``` 
 
+    
+## Executar projeto com docker
+
+Para executar o projeto com o docker primeiro se faz necessário construir o jar do projeto: `mvn clean package`
+
+Em seguida para executar o projeto com docker compose: `docker-compose up` ou `docker-compose up -d` para rodar em background.
+
 ## Requests
 A api suporta requests de GET, POST, DELETE.
 
@@ -33,6 +40,7 @@ GET: `localhost:8080/api/planet/` Busca todos os planetas cadastrados na base de
     ]
 
 GET: `localhost:8080/api/planet/{ID}` Busca o planeta cadastrado com o ID indicado.
+
 GET: `localhost:8080/api/planet/name/?name={NAME}` Busca o planeta cadastrado com o nome indicado.
 
     Resposta:
@@ -57,10 +65,19 @@ POST: `localhost:8080/api/planet/` Insere um novo planeta na base de dados. Para
 DELETE: `localhost:8080/api/planet/{ID}` Deleta um planeta na base de dados com o id indicado.
     
     Sem conteúdo de resposta
-    
-    
-## Executar projeto com docker
 
-Para executar o projeto com o docker primeiro se faz necessário construir o jar do projeto: `mvn clean package`
 
-Em seguida para executar o projeto com docker compose: `docker-compose up` ou `docker-compose up -d` para rodar em background.
+## Exceptions
+
+Caso ocorra um erro, o retorno será da seguinte forma:
+
+```
+{
+    "error": "Mensagem do erro"
+}
+```
+### Erros comuns:
+
+* Campo vazio, gera um erro de BAD REQUEST.
+* Planeta já existente, gera um erro de CONFLICT.
+* Planeta não encontrado, gera um erro de NOT FOUND.
