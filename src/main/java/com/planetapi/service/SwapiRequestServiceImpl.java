@@ -16,7 +16,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import static com.planetapi.configuration.CacheConfiguration.PLANET_NAME;
+
 import static java.util.Arrays.asList;
+
 import static org.springframework.http.HttpHeaders.USER_AGENT;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -36,7 +39,7 @@ public class SwapiRequestServiceImpl implements SwapiRequestService{
     }
 
     @Override
-    @Cacheable("name")
+    @Cacheable(PLANET_NAME)
     public int getApparisons(String name) {
 
         log.info("Requesting data to {} to search planet {}", swapiComponent.getUrl(), name);
@@ -50,6 +53,8 @@ public class SwapiRequestServiceImpl implements SwapiRequestService{
         builder.queryParam("search", name);
 
         HttpEntity<?> entity = new HttpEntity<>(httpHeaders);
+
+        log.info("Final request URI {}", builder.toUriString());
 
         ResponseEntity<PlanetsResults> responseEntity = restTemplate.exchange(builder.toUriString(), GET, entity, PlanetsResults.class);
 
