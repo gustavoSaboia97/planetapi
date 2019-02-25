@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ehcache>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="ehcache.xsd"
+         updateCheck="true"
+         monitoring="autodetect"
+         dynamicConfig="true">
+
+    <cache name="name"
+           maxEntriesLocalHeap="5000"
+           eternal="false"
+           timeToLiveSeconds="86400">
+        <pinning store="localMemory"/>
+    </cache>
+</ehcache>
