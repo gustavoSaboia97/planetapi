@@ -1,3 +1,6 @@
+server:
+  port : 8888
+
 swapi:
   planet:
     url: https://swapi.co/api/planets/
