@@ -28,8 +28,6 @@ public class PlanetBusinessImpl implements PlanetBusiness {
 
         log.info("Inserting planet {} in mongodb", planet);
 
-        validation.validateFields(planet);
-
         Optional<Planet> optionalPlanet = planetRepository.findByName(planet.getName());
 
         if (optionalPlanet.isPresent())

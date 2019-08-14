@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static com.planetapi.components.UrlBuilder.*;
@@ -37,7 +38,7 @@ public class PlanetController {
     private PlanetBusiness planetBusiness;
 
     @PostMapping
-    public ResponseEntity<Planet> createPlanet(@RequestBody Planet planet){
+    public ResponseEntity<Planet> createPlanet(@Valid @RequestBody Planet planet){
 
         log.info("POST: Accessing {} to create new planet with following data {}", PLANET_API_PATH, planet);
 

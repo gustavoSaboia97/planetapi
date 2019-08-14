@@ -1,6 +1,5 @@
 package com.planetapi.business;
 
-import com.planetapi.exception.CannotBeBlankException;
 import com.planetapi.exception.PlanetAlreadyExistsException;
 import com.planetapi.exception.PlanetNotFoundException;
 import com.planetapi.model.Planet;
@@ -59,7 +58,6 @@ public class PlanetBusinessImplTest {
 
         Planet newPlanet = planetBusinessImpl.addPlanet(planetMock);
 
-        verify(validation).validateFields(planetMock);
         verify(planetRepository).findByName(name);
         verify(planetRepository).insert(planetMock);
         verify(swapiRequestService).getApparisons(name);
@@ -79,7 +77,6 @@ public class PlanetBusinessImplTest {
 
         planetBusinessImpl.addPlanet(planetMock);
 
-        verify(validation).validateFields(planetMock);
         verify(planetRepository).findByName(name);
         verify(planetRepository, times(0)).insert(planetMock);
     }
