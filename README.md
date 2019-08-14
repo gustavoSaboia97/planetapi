@@ -23,7 +23,7 @@ MONGO_DATABASE=planetsdb
 
 Para executar o projeto com o docker primeiro se faz necessário construir o jar do projeto: `mvn clean package`
 
-Em seguida para executar o projeto com docker compose: `docker-compose up` ou `docker-compose up -d` para rodar em background.
+Em seguida para executar o projeto com docker compose: `docker-compose up --build` ou `docker-compose up -d --build` para rodar em background.
 
 ## Requests
 A api suporta requests de GET, POST, DELETE.

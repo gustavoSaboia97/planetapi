@@ -9,7 +9,7 @@ services:
       - MONGO_PORT=27017
       - MONGO_DATABASE=planetsdb
     ports:
-      - 8080:8080
+      - 8888:8888
     working_dir: /app
     depends_on:
       - mongo
@@ -20,8 +20,6 @@ services:
   mongo:
     image: mongo
     container_name: planetapi-mongo
-    ports:
-      - 27017:27017
     networks:
       - planetapi-mongo
     volumes:
